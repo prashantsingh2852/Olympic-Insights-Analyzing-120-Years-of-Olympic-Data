@@ -1,0 +1,328 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 InriaSans-Regular;}
+{\colortbl;\red255\green255\blue255;\red158\green158\blue158;\red170\green170\blue170;\red115\green158\blue202;
+\red193\green170\blue108;\red192\green192\blue192;\red202\green197\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c61961\c61961\c61961;\csgenericrgb\c66667\c66667\c66667;\csgenericrgb\c45098\c61961\c79216;
+\csgenericrgb\c75686\c66667\c42353;\csgenericrgb\c75294\c75294\c75294;\csgenericrgb\c79216\c77255\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww22200\viewh15460\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs30 \cf2 Questions\cf3  \cf4 to\cf3  \cf2 solve\cf3  :\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 1. \cf2 How\cf3  \cf2 many\cf3  \cf2 olympics\cf3  \cf2 games\cf3  \cf2 have\cf3  \cf2 been\cf3  \cf2 held\cf3 ?\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf5 count\cf3 (\cf4 distinct\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 total_oly_games\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 2. \cf2 List\cf3  \cf2 down\cf3  \cf4 all\cf3  \cf2 Olympics\cf3  \cf2 games\cf3  \cf2 held\cf3  \cf2 so\cf3  \cf2 far\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf4 distinct\cf3  \cf2 games\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 3. \cf2 Mention\cf3  \cf2 the\cf3  \cf2 total\cf3  \cf4 no\cf3  \cf4 of\cf3  \cf2 nations\cf3  \cf2 who\cf3  \cf2 participated\cf3  \cf4 in\cf3  \cf4 each\cf3  \cf2 olympics\cf3  \cf2 game\cf3 ?\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 games\cf3 , \cf5 count\cf3 ( \cf4 distinct\cf3  \cf2 noc\cf3 ) \cf4 as\cf3  \cf2 country_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 4. \cf2 Which\cf3  \cf5 year\cf3  \cf2 saw\cf3  \cf2 the\cf3  \cf2 highest\cf3  \cf4 and\cf3  \cf2 lowest\cf3  \cf4 no\cf3  \cf4 of\cf3  \cf2 countries\cf3  \cf2 participating\cf3  \cf4 in\cf3  \cf2 olympics\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 with\cf3  \cf2 cte_1\cf3  \cf4 as\cf3  \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf5 count\cf3 ( \cf4 distinct\cf3  \cf2 noc\cf3 ) \cf4 as\cf3  \cf2 country_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 1\cf3 ),\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 cte_2\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 case\cf3   \cf4 when\cf3  \cf2 country_count\cf3  = \cf5 max\cf3 (\cf2 country_count\cf3 ) \cf4 over\cf3  () \cf4 then\cf3  \cf2 games\cf3  \cf4 end\cf3  \cf4 as\cf3  \cf2 high_cntry_count\cf3 ,\cf0 \
+\cf4 case\cf3  \cf4 when\cf3  \cf2 country_count\cf3  = \cf5 min\cf3 (\cf2 country_count\cf3 ) \cf4 over\cf3  () \cf4 then\cf3  \cf2 games\cf3  \cf4 end\cf3  \cf4 as\cf3  \cf2 min_cntry_count\cf0 \
+\cf4 from\cf3  \cf2 cte_1\cf3 )\cf0 \
+\cf4 select\cf3  \cf2 high_cntry_count\cf3 , \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 min_cntry_count\cf3  \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_2\cf0 \
+\cf4 where\cf3  \cf2 high_cntry_count\cf3  \cf4 is\cf3  \cf4 not\cf3  \cf4 null\cf3  \cf4 or\cf3  \cf2 min_cntry_count\cf3  \cf4 is\cf3  \cf4 not\cf3  \cf4 null\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 5. \cf2 Which\cf3  \cf2 nation\cf3  \cf2 has\cf3  \cf2 participated\cf3  \cf4 in\cf3  \cf4 all\cf3  \cf4 of\cf3  \cf2 the\cf3  \cf2 olympic\cf3  \cf2 games\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 nr\cf3 .\cf2 region\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 count\cf3 (\cf4 distinct\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 total_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf3  \cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 having\cf3  \cf2 total_count\cf3  = \cf6 51\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 6. \cf2 Identify\cf3  \cf2 the\cf3  \cf2 sport\cf3  \cf2 which\cf3  \cf2 was\cf3  \cf2 played\cf3  \cf4 in\cf3  \cf4 all\cf3  \cf2 summer\cf3  \cf2 olympics\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 sport\cf3 , \cf5 count\cf3 (\cf4 distinct\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 total_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 where\cf3  \cf2 season\cf3  = \cf7 'summer'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 having\cf3  \cf2 total_count\cf3  = \cf6 29\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 2\cf3  \cf4 desc\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 8. \cf4 Fetch\cf3  \cf2 the\cf3  \cf2 total\cf3  \cf4 no\cf3  \cf4 of\cf3  \cf2 sports\cf3  \cf2 played\cf3  \cf4 in\cf3  \cf4 each\cf3  \cf2 olympic\cf3  \cf2 games\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 games\cf3 , \cf5 count\cf3 (\cf4 distinct\cf3  \cf2 sport\cf3 ) \cf4 as\cf3  \cf2 sport_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 2\cf3  \cf4 desc\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 9. \cf4 Fetch\cf3  \cf2 oldest\cf3  \cf2 athletes\cf3  \cf4 to\cf3  \cf2 win\cf3  \cf2 a\cf3  \cf2 gold\cf3  \cf2 medal\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  * \cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  = \cf7 'gold'\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf2 age\cf3  \cf4 desc\cf3  \cf0 \
+\cf4 limit\cf3  \cf6 2\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 10. \cf2 Find\cf3  \cf2 the\cf3  \cf2 Ratio\cf3  \cf4 of\cf3  \cf2 male\cf3  \cf4 and\cf3  \cf2 female\cf3  \cf2 athletes\cf3  \cf2 participated\cf3  \cf4 in\cf3  \cf4 all\cf3  \cf2 olympic\cf3  \cf2 games\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 with\cf3  \cf2 cte_1\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 sex\cf3 , \cf5 count\cf3 (\cf2 sex\cf3 ) \cf4 as\cf3  \cf2 total_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ),\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 cte_2\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  *, \cf4 row_number\cf3 () \cf4 over\cf3  () \cf4 as\cf3  \cf2 rn\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_1\cf3 )\cf0 \
+\cf4 select\cf3  \cf2 cte_2_1\cf3 .\cf2 total_count\cf3  / \cf2 cte_2_2\cf3 .\cf2 total_count\cf3  \cf4 as\cf3  \cf2 ratio\cf0 \
+\cf4 from\cf3  \cf2 cte_2\cf3  \cf2 cte_2_1\cf3 , \cf2 cte_2\cf3  \cf2 cte_2_2\cf0 \
+\cf4 where\cf3  \cf2 cte_2_1\cf3 .\cf2 rn\cf3  = \cf6 1\cf3  \cf4 and\cf3  \cf2 cte_2_2\cf3 .\cf2 rn\cf3  = \cf6 2\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 11. \cf4 Fetch\cf3  \cf2 the\cf3  \cf2 top\cf3  \cf6 5\cf3  \cf2 athletes\cf3  \cf2 who\cf3  \cf2 have\cf3  \cf2 won\cf3  \cf2 the\cf3  \cf2 most\cf3  \cf2 gold\cf3  \cf2 medals\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 name\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 total_medal_gold\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  = \cf7 'gold'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 2\cf3  \cf4 desc\cf3  \cf0 \
+\cf4 limit\cf3  \cf6 5\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 12. \cf4 Fetch\cf3  \cf2 the\cf3  \cf2 top\cf3  \cf6 5\cf3  \cf2 athletes\cf3  \cf2 who\cf3  \cf2 have\cf3  \cf2 won\cf3  \cf2 the\cf3  \cf2 most\cf3  \cf2 medals\cf3  (\cf2 gold\cf3 /\cf2 silver\cf3 /\cf2 bronze\cf3 ).\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 name\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 total_medal_gold\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  <> \cf7 'NA'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 2\cf3  \cf4 desc\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 13. \cf4 Fetch\cf3  \cf2 the\cf3  \cf2 top\cf3  \cf6 5\cf3  \cf2 most\cf3  \cf2 successful\cf3  \cf2 countries\cf3  \cf4 in\cf3  \cf2 olympics\cf3 . \cf2 Success\cf3  \cf4 is\cf3  \cf4 defined\cf3  \cf4 by\cf3  \cf4 no\cf3  \cf4 of\cf3  \cf2 medals\cf3  \cf2 won\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 region\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 total_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  <> \cf7 'NA'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf6 2\cf3  \cf4 desc\cf3  \cf0 \
+\cf4 limit\cf3  \cf6 5\cf0 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 14. \cf2 List\cf3  \cf2 down\cf3  \cf2 total\cf3  \cf2 gold\cf3 , \cf2 silver\cf3  \cf4 and\cf3  \cf2 bronze\cf3  \cf2 medals\cf3  \cf2 won\cf3  \cf4 by\cf3  \cf4 each\cf3  \cf2 country\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 region\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'gold'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 gold_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'bronze'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 bronze_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'silver'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 silver_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 region\cf3 , \cf2 medal\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf3 ) \cf2 xx\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf2 gold_count\cf3  + \cf2 bronze_count\cf3  + \cf2 silver_count\cf3  \cf4 desc\cf3  \cf0 \
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 15. \cf2 List\cf3  \cf2 down\cf3  \cf2 total\cf3  \cf2 gold\cf3 , \cf2 silver\cf3  \cf4 and\cf3  \cf2 bronze\cf3  \cf2 medals\cf3  \cf2 won\cf3  \cf4 by\cf3  \cf4 each\cf3  \cf2 country\cf3  \cf4 corresponding\cf3  \cf4 to\cf3  \cf4 each\cf3  \cf2 olympic\cf3  \cf2 games\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'gold'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 gold_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'silver'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 silver_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'bronze'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 bronze_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 , \cf2 medal\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  <> \cf7 'NA'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf3 ,\cf6 3\cf3 ) \cf2 xx\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf2 games\cf3  \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 16. \cf2 Identify\cf3  \cf2 which\cf3  \cf2 country\cf3  \cf2 won\cf3  \cf2 the\cf3  \cf2 most\cf3  \cf2 gold\cf3 , \cf2 most\cf3  \cf2 silver\cf3  \cf4 and\cf3  \cf2 most\cf3  \cf2 bronze\cf3  \cf2 medals\cf3  \cf4 in\cf3  \cf4 each\cf3  \cf2 olympic\cf3  \cf2 games\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 with\cf3  \cf2 cte_1\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 , \cf2 medal\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  <> \cf7 'NA'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf3 ,\cf6 3\cf3 ),\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 cte_2\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'gold'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 gold_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'silver'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 silver_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'bronze'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 bronze_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_1\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf2 games\cf3 ),\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 cte_3\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 , \cf2 gold_count\cf3 , \cf2 silver_count\cf3 , \cf2 bronze_count\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf2 gold_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_gold\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf2 silver_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_silver\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf2 bronze_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_bronze\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_2\cf3 )\cf0 \
+\cf4 select\cf3  \cf2 games\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 gold_count\cf3  = \cf2 max_gold\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 max_gold_region\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 silver_count\cf3  = \cf2 max_silver\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 )\cf4 as\cf3  \cf2 max_silver_region\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 bronze_count\cf3  = \cf2 max_bronze\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 max_bronze_region\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_3\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 17. \cf2 Identify\cf3  \cf2 which\cf3  \cf2 country\cf3  \cf2 won\cf3  \cf2 the\cf3  \cf2 most\cf3  \cf2 gold\cf3 , \cf2 most\cf3  \cf2 silver\cf3 , \cf2 most\cf3  \cf2 bronze\cf3  \cf2 medals\cf3  \cf4 and\cf3  \cf2 the\cf3  \cf2 most\cf3  \cf2 medals\cf3  \cf4 in\cf3  \cf4 each\cf3  \cf2 olympic\cf3  \cf2 games\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 with\cf3  \cf2 cte_1\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 , \cf2 medal\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  <> \cf7 'NA'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf3 ,\cf6 3\cf3 ),\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 cte_2\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 , \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 sum\cf3 (\cf2 medal_count\cf3 ) \cf4 as\cf3  \cf2 total_medal_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'gold'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 gold_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'silver'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 silver_count\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 medal\cf3  = \cf7 'bronze'\cf3  \cf4 then\cf3  \cf2 medal_count\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 bronze_count\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_1\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf0 \
+\cf4 order\cf3  \cf4 by\cf3  \cf2 games\cf3 ),\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 cte_3\cf3  \cf4 as\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf3 (\cf4 select\cf3  \cf2 games\cf3 , \cf2 region\cf3 , \cf2 total_medal_count\cf3 , \cf2 gold_count\cf3 , \cf2 silver_count\cf3 , \cf2 bronze_count\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf2 gold_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_gold\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf2 silver_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_silver\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf2 bronze_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_bronze\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf2 total_medal_count\cf3 ) \cf4 over\cf3  (\cf4 partition\cf3  \cf4 by\cf3  \cf2 games\cf3 ) \cf4 as\cf3  \cf2 max_medal\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_2\cf3 )\cf0 \
+\cf4 select\cf3  \cf2 games\cf3 ,\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 gold_count\cf3  = \cf2 max_gold\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 max_gold_region\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 silver_count\cf3  = \cf2 max_silver\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 )\cf4 as\cf3  \cf2 max_silver_region\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 bronze_count\cf3  = \cf2 max_bronze\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 max_bronze_region\cf3 ,\cf0 \
+\cf5 max\cf3 (\cf4 case\cf3  \cf4 when\cf3  \cf2 total_medal_count\cf3  = \cf2 max_medal\cf3  \cf4 then\cf3  \cf2 region\cf3  \cf4 end\cf3 ) \cf4 as\cf3  \cf2 max_total_medal_region\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 from\cf3  \cf2 cte_3\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 18. \cf2 Which\cf3  \cf2 countries\cf3  \cf2 have\cf3  \cf2 never\cf3  \cf2 won\cf3  \cf2 gold\cf3  \cf2 medal\cf3  \cf2 but\cf3  \cf2 have\cf3  \cf2 won\cf3  \cf2 silver\cf3 /\cf2 bronze\cf3  \cf2 medals\cf3 ?\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 region\cf3 , \cf2 medal\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf3  \cf0 \
+\cf4 where\cf3  \cf2 medal\cf3  \cf4 not\cf3  \cf4 in\cf3  (\cf7 'NA'\cf3 , \cf7 'gold'\cf3 )\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 19. \cf4 In\cf3  \cf2 which\cf3  \cf2 Sport\cf3 /\cf2 event\cf3 , \cf2 India\cf3  \cf2 has\cf3  \cf2 won\cf3  \cf2 highest\cf3  \cf2 medals\cf3 .\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 region\cf3 , \cf2 sport\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 where\cf3  \cf2 region\cf3  = \cf7 'India'\cf3  \cf4 and\cf3  \cf2 medal\cf3  <> \cf7 'NA'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 , \cf6 2\cf0 \
+\cf4 limit\cf3  \cf6 1\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 20. \cf2 Break\cf3  \cf2 down\cf3  \cf4 all\cf3  \cf2 olympic\cf3  \cf2 games\cf3  \cf4 where\cf3  \cf2 India\cf3  \cf2 won\cf3  \cf2 medal\cf3  \cf4 for\cf3  \cf2 Hockey\cf3  \cf4 and\cf3  \cf2 how\cf3  \cf2 many\cf3  \cf2 medals\cf3  \cf4 in\cf3  \cf4 each\cf3  \cf2 olympic\cf3  \cf2 games\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 select\cf3  \cf2 games\cf3 , \cf2 sport\cf3 , \cf5 count\cf3 (\cf2 medal\cf3 ) \cf4 as\cf3  \cf2 medal_count\cf0 \
+\cf4 from\cf3  \cf2 athlete_events\cf3  \cf2 ae\cf3  \cf0 \
+\cf4 left\cf3  \cf4 join\cf3  \cf2 noc_regions\cf3  \cf2 nr\cf3  \cf0 \
+\cf4 on\cf3  \cf2 ae\cf3 .\cf2 noc\cf3  = \cf2 nr\cf3 .\cf2 noc\cf0 \
+\cf4 where\cf3  \cf2 region\cf3  = \cf7 'India'\cf3  \cf4 and\cf3  \cf2 sport\cf3  = \cf7 'Hockey'\cf0 \
+\cf4 group\cf3  \cf4 by\cf3  \cf6 1\cf3 ,\cf6 2\cf0 \
+}
