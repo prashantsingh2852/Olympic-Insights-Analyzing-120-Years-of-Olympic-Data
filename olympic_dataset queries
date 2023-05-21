@@ -1,0 +1,232 @@
+
+1. How many olympics games have been held?
+
+select count(distinct games) as total_oly_games
+from athlete_events ae 
+
+2. List down all Olympics games held so far.
+
+select distinct games
+from athlete_events ae 
+
+3. Mention the total no of nations who participated in each olympics game?
+
+select games, count( distinct noc) as country_count
+from athlete_events ae 
+group by 1
+order by 1
+
+4. Which year saw the highest and lowest no of countries participating in olympics
+
+with cte_1 as 
+(select games, count( distinct noc) as country_count
+from athlete_events ae 
+group by 1
+order by 1),
+cte_2 as
+(select
+case  when country_count = max(country_count) over () then games end as high_cntry_count,
+case when country_count = min(country_count) over () then games end as min_cntry_count
+from cte_1)
+select high_cntry_count, 
+min_cntry_count 
+from cte_2
+where high_cntry_count is not null or min_cntry_count is not null 
+
+5. Which nation has participated in all of the olympic games
+
+select nr.region,
+count(distinct games) as total_count
+from athlete_events ae 
+left join noc_regions nr 
+on ae.noc = nr.noc 
+group by 1
+having total_count = 51
+
+6. Identify the sport which was played in all summer olympics.
+
+select sport, count(distinct games) as total_count
+from athlete_events ae 
+where season = 'summer'
+group by 1
+having total_count = 29
+order by 2 desc 
+
+8. Fetch the total no of sports played in each olympic games.
+
+select games, count(distinct sport) as sport_count
+from athlete_events ae 
+group by 1
+order by 2 desc 
+
+9. Fetch oldest athletes to win a gold medal
+
+select * from athlete_events ae 
+where medal = 'gold'
+order by age desc 
+limit 2
+
+10. Find the Ratio of male and female athletes participated in all olympic games.
+
+with cte_1 as
+(select sex, count(sex) as total_count
+from athlete_events ae
+group by 1),
+cte_2 as
+(select *, row_number() over () as rn
+from cte_1)
+select cte_2_1.total_count / cte_2_2.total_count as ratio
+from cte_2 cte_2_1, cte_2 cte_2_2
+where cte_2_1.rn = 1 and cte_2_2.rn = 2
+
+11. Fetch the top 5 athletes who have won the most gold medals.
+
+select name, count(medal) as total_medal_gold
+from athlete_events ae 
+where medal = 'gold'
+group by 1
+order by 2 desc 
+limit 5
+
+12. Fetch the top 5 athletes who have won the most medals (gold/silver/bronze).
+
+select name, count(medal) as total_medal_gold
+from athlete_events ae 
+where medal <> 'NA'
+group by 1
+order by 2 desc 
+
+13. Fetch the top 5 most successful countries in olympics. Success is defined by no of medals won.
+
+select region, count(medal) as total_count
+from athlete_events ae 
+left join noc_regions nr 
+on ae.noc = nr.noc
+where medal <> 'NA'
+group by 1
+order by 2 desc 
+limit 5
+
+
+14. List down total gold, silver and bronze medals won by each country.
+
+select region,
+max(case when medal = 'gold' then medal_count end) as gold_count,
+max(case when medal = 'bronze' then medal_count end) as bronze_count,
+max(case when medal = 'silver' then medal_count end) as silver_count
+from
+(select region, medal, count(medal) as medal_count
+from athlete_events ae
+left join noc_regions nr 
+on ae.noc = nr.noc
+group by 1,2) xx
+group by 1
+order by gold_count + bronze_count + silver_count desc 
+
+
+15. List down total gold, silver and bronze medals won by each country corresponding to each olympic games.
+
+select games, region,
+max(case when medal = 'gold' then medal_count end) as gold_count,
+max(case when medal = 'silver' then medal_count end) as silver_count,
+max(case when medal = 'bronze' then medal_count end) as bronze_count
+from
+(select games, region, medal, count(medal) as medal_count
+from athlete_events ae
+left join noc_regions nr 
+on ae.noc = nr.noc
+where medal <> 'NA'
+group by 1,2,3) xx
+group by 1,2
+order by games 
+
+16. Identify which country won the most gold, most silver and most bronze medals in each olympic games.
+
+with cte_1 as
+(select games, region, medal, count(medal) as medal_count
+from athlete_events ae
+left join noc_regions nr 
+on ae.noc = nr.noc
+where medal <> 'NA'
+group by 1,2,3),
+cte_2 as
+(select games, region,
+max(case when medal = 'gold' then medal_count end) as gold_count,
+max(case when medal = 'silver' then medal_count end) as silver_count,
+max(case when medal = 'bronze' then medal_count end) as bronze_count
+from cte_1
+group by 1,2
+order by games),
+cte_3 as
+(select games, region, gold_count, silver_count, bronze_count,
+max(gold_count) over (partition by games) as max_gold,
+max(silver_count) over (partition by games) as max_silver,
+max(bronze_count) over (partition by games) as max_bronze
+from cte_2)
+select games,
+max(case when gold_count = max_gold then region end) as max_gold_region,
+max(case when silver_count = max_silver then region end)as max_silver_region,
+max(case when bronze_count = max_bronze then region end) as max_bronze_region
+from cte_3
+group by 1
+
+17. Identify which country won the most gold, most silver, most bronze medals and the most medals in each olympic games.
+
+with cte_1 as
+(select games, region, medal, count(medal) as medal_count
+from athlete_events ae
+left join noc_regions nr 
+on ae.noc = nr.noc
+where medal <> 'NA'
+group by 1,2,3),
+cte_2 as
+(select games, region, 
+sum(medal_count) as total_medal_count,
+max(case when medal = 'gold' then medal_count end) as gold_count,
+max(case when medal = 'silver' then medal_count end) as silver_count,
+max(case when medal = 'bronze' then medal_count end) as bronze_count
+from cte_1
+group by 1,2
+order by games),
+cte_3 as
+(select games, region, total_medal_count, gold_count, silver_count, bronze_count,
+max(gold_count) over (partition by games) as max_gold,
+max(silver_count) over (partition by games) as max_silver,
+max(bronze_count) over (partition by games) as max_bronze,
+max(total_medal_count) over (partition by games) as max_medal
+from cte_2)
+select games,
+max(case when gold_count = max_gold then region end) as max_gold_region,
+max(case when silver_count = max_silver then region end)as max_silver_region,
+max(case when bronze_count = max_bronze then region end) as max_bronze_region,
+max(case when total_medal_count = max_medal then region end) as max_total_medal_region
+from cte_3
+group by 1
+
+18. Which countries have never won gold medal but have won silver/bronze medals?
+
+select region, medal, count(medal) as medal_count
+from athlete_events ae 
+left join noc_regions nr 
+on ae.noc = nr.noc 
+where medal not in ('NA', 'gold')
+group by 1,2
+
+19. In which Sport/event, India has won highest medals.
+
+select region, sport, count(medal) as medal_count
+from athlete_events ae 
+left join noc_regions nr 
+on ae.noc = nr.noc
+where region = 'India' and medal <> 'NA'
+group by 1, 2
+limit 1
+
+20. Break down all olympic games where India won medal for Hockey and how many medals in each olympic games
+
+select games, sport, count(medal) as medal_count
+from athlete_events ae 
+left join noc_regions nr 
+on ae.noc = nr.noc
+where region = 'India' and sport = 'Hockey'
+group by 1,2
